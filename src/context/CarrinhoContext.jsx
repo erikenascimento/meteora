@@ -1,5 +1,5 @@
 import { createContext, useEffect, useMemo, useReducer, useState } from "react";
-import { carrinhoReducer } from "@/reducers/carrinhoReducer";
+import { carrinhoReducer } from "../reducers/carrinhoReducer";
 
 export const CarrinhoContext = createContext();
 CarrinhoContext.displayName = "Carrinho";
@@ -13,7 +13,7 @@ export const CarrinhoProvider = ({ children }) => {
 
 	const { totalTemp, quantidadeTemp } = useMemo(() => {
 		return carrinho.reduce(
-			() => (acumulador, produto) => ({
+			(acumulador, produto) => ({
 				quantidadeTemp: acumulador.quantidadeTemp + produto.quantidade,
 				totalTemp: acumulador.totalTemp + produto.preco * produto.quantidade,
 			}),
@@ -31,7 +31,12 @@ export const CarrinhoProvider = ({ children }) => {
 
 	return (
 		<CarrinhoContext.Provider
-			value={(carrinho, dispatch, quantidade, valorTotal)}
+			value={{
+				carrinho,
+				dispatch,
+				quantidade,
+				valorTotal,
+			}}
 		>
 			{children}
 		</CarrinhoContext.Provider>
