@@ -11,6 +11,14 @@ export const CarrinhoProvider = ({ children }) => {
 	const [quantidade, setQuantidade] = useState(0);
 	const [valorTotal, setValorTotal] = useState(0);
 
+	const produto = carrinho.find(item => item.id === id);
+
+	if (produto && produto.quantidade > 1) {
+		dispatch(updateQuantidadeAction(id, produto.quantidade - 1));
+	} else {
+		dispatch(removeProdutoAction(id));
+	}
+
 	return (
 		<CarrinhoContext.Provider
 			value={(carrinho, dispatch, quantidade, valorTotal)}
